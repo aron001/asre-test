@@ -9,12 +9,13 @@ function App() {
 
   return (
     <>
-      <div>
+      <continer>
         <Navbar/>
+        <Banner/>
         <Card/>
         <ProductCard/>
 
-      </div>
+      </continer>
      
     </>
   )

@@ -1,49 +1,52 @@
-import React from 'react'
-import clock from '../assets/clock.jpg'
+import React, { useState, useEffect } from 'react';
 
+const Banner = () => {
+  const [bannerdata, setBannerdata] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-const Banner = ({active}) => {
+  useEffect(() => {
+    const getBannerinfo = async () => {
+      try {
+        const res = await fetch('https://api.testvalley.kr/main-banner/all');
+        const data = await res.json();
+        setBannerdata(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getBannerinfo();
+  }, []);
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? bannerdata.length - 1 : prevIndex - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === bannerdata.length - 1 ? 0 : prevIndex + 1));
+  };
+
   return (
-    
-
-<div id="gallery" class="relative w-full" data-carousel="slide">
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src={clock} class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt=""/>
+    <div>
+      {bannerdata.length > 0 && (
+        <div className="relative font-[sans-serif] before:absolute before:w-full before:h-full before:inset-0 before:bg-black before:opacity-50 before:z-10">
+          <img
+            src={bannerdata[currentIndex].pcImageUrl}
+            alt="Banner Image"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="min-h-[300px] relative z-50 h-full max-w-6xl mx-auto flex flex-col justify-center items-center text-center text-white p-6">
+            <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-4 py-2 rounded-l" onClick={handlePrev}>
+              &lt;
+            </button>
+            <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-4 py-2 rounded-r" onClick={handleNext}>
+              &gt;
+            </button>
+          </div>
         </div>
-        
-        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt=""/>
-        </div>
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt=""/>
-        </div>
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt=""/>
-        </div>
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt=""/>
-        </div>
+      )}
     </div>
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-</div>
+  );
+};
 
-  )
-}
-
-export default Banner
+export default Banner;
