@@ -29,13 +29,13 @@ const Banner = () => {
   return (
     <div>
       {bannerdata.length > 0 && (
-        <div className="relative font-[sans-serif] before:absolute before:w-full before:h-full before:inset-0 before:bg-black before:opacity-50 before:z-10">
+        <div className="relative banner-container max-w-full">
           <img
             src={bannerdata[currentIndex].pcImageUrl}
             alt="Banner Image"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="min-h-[300px] relative z-50 h-full max-w-6xl mx-auto flex flex-col justify-center items-center text-center text-white p-6">
+          <div className="min-h-[300px] relative z-50 max-w-screen-xl mx-auto flex flex-col justify-center items-center text-center text-white p-6">
             <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-4 py-2 rounded-l" onClick={handlePrev}>
               &lt;
             </button>

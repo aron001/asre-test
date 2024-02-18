@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import clock from '../assets/clock.jpg';
 
 const ProductCard = () => {
   const [collectionData, setCollectionData] = useState([]);
@@ -25,20 +24,20 @@ const ProductCard = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-32 mt-12">
+    <div className="container mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 mt-10">
       <div className="grid grid-cols-1 gap-4">
         {collectionData.map(item => (
-          <div key={item.id} className="grid grid-cols-5 gap-4">
+          <div key={item.id} className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="col-span-1">
-              <h5 className="text-xl font-bold tracking-tight text-gray-700 dark:text-gray-700">{item.title}</h5>
+              <h5 className="text-xl font-normal tracking-tight text-gray-900 dark:text-gray-900">{item.title}</h5>
             </div>
 
-            <div className="col-span-4 grid grid-cols-4 gap-4">
+            <div className="col-span-1 md:col-span-4 grid grid-cols-1 md:grid-cols-4 gap-4">
               {item.items.slice(0, 4).map(subItem => (
                 <div key={subItem.uuid} className="bg-white border border-gray-200 rounded-lg shadow dark:bg-white">
                   <div className="p-4">
                     {subItem.publication.media.map(media => (
-                      <img key={media.id} src={media.uri} alt="Clock" className="w-full" />
+                      <img key={media.id} src={media.uri} alt="Clock" className="w-full h-48 md:h-64 object-cover" />
                     ))}
                   </div>
                   <h5 className="text-sm font-normal tracking-tight text-gray-800 dark:text-gray-800">{subItem.publication.title}</h5>
